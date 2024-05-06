@@ -1,0 +1,107 @@
+using System;
+
+
+public abstract class Operation
+{
+    public abstract int Execute(int a, int b);
+}
+
+public abstract class PrimeNumberChecker
+{
+    public abstract bool IsPrime(int number);
+}
+
+
+public class Addition : Operation
+{
+    public override int Execute(int a, int b)
+    {
+        return a + b;
+    }
+}
+
+public class Subtraction : Operation
+{
+    public override int Execute(int a, int b)
+    {
+        return a - b;
+    }
+}
+
+public class Multiplication : Operation
+{
+    public override int Execute(int a, int b)
+    {
+        return a * b;
+    }
+}
+
+public class Division : Operation
+{
+    public override int Execute(int a, int b)
+    {
+        if (b == 0)
+        {
+            throw new DivideByZeroException("Cannot divide by zero");
+        }
+
+        return a / b;
+    }
+}
+
+
+public class SimplePrimeChecker : PrimeNumberChecker
+{
+    public override bool IsPrime(int number)
+    {
+        if (number <= 1)
+        {
+            return false;
+        }
+
+        for (int i = 2; i < number; i++)
+        {
+            if (number % i == 0)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+}
+
+
+public class Calculator
+{
+    private readonly IOperation _operation;
+    private readonly IPrimeNumberChecker _primeNumberChecker;
+
+    public Calculator(IOperation operation, IPrimeNumberChecker primeNumberChecker)
+    {
+        _operation = operation;
+        _primeNumberChecker = primeNumberChecker;
+    }
+
+    public int Add(int a, int b)
+    {
+        return _operation.Execute(a, b);
+    }
+
+    public int Subtract(int a, int b)
+    {
+        return _operation.Execute(a, b);
+    }
+
+    public int Multiply(int a, int b)
+    {
+        return _operation.Execute(a, b);
+    }
+
+    public int Divide(int a, int b)
+    {
+        return _operation.Execute(a, b);
+    }
+
+    public bool IsPrime(int number)
+    {
